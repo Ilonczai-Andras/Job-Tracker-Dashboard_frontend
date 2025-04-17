@@ -3,6 +3,7 @@ import useUpdateReminder from "../../../hooks/Reminder/useUpdateReminder";
 import toast from "react-hot-toast";
 import { Reminder } from "../../../hooks/Reminder/types";
 import { ReminderCreateInput } from "../../../hooks/Reminder/types";
+import Modal from "../Modal";
 
 type ReminderFormData = ReminderCreateInput & { id: number };
 
@@ -92,69 +93,77 @@ const ReminderModal = ({ isOpen, onClose, reminder }: ReminderModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-      onClick={onClose}
-    >
-      <div
-        className="bg-white p-6 rounded shadow-md w-full max-w-md"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 className="text-xl mb-4 text-black">Editing a reminder</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="title"
-            type="text"
-            value={formData.title}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded text-black"
-            required
-          />
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded text-black"
-          />
-          <input
-            name="remind_at"
-            type="datetime-local"
-            value={formData.remind_at}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded text-black"
-            required
-          />
-          <select
-            name="notification_offset"
-            value={formData.notification_offset}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded text-black"
-          >
-            <option value={0}>At the time of the event</option>
-            <option value={15}>15 minutes before</option>
-            <option value={60}>1 hour before</option>
-            <option value={360}>6 hours before</option>
-            <option value={1440}>1 day before</option>
-          </select>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <h2 className="text-xl mb-4 text-white">Editing a reminder</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <label
+          htmlFor="title"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Title
+        </label>
+        <input
+          name="title"
+          type="text"
+          value={formData.title}
+          onChange={handleChange}
+          className="w-full border px-3 py-2 rounded text-black"
+          required
+        />
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Description
+        </label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full border px-3 py-2 rounded text-black"
+        />
+        <label
+          htmlFor="deadline"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Remind at
+        </label>
+        <input
+          name="remind_at"
+          type="datetime-local"
+          value={formData.remind_at}
+          onChange={handleChange}
+          className="w-full border px-3 py-2 rounded text-black"
+          required
+        />
+        <label
+          htmlFor="notificationOffset"
+          className="block text-sm font-medium text-gray-700"
+        >
+          When should we notify you?
+        </label>
+        <select
+          name="notification_offset"
+          value={formData.notification_offset}
+          onChange={handleChange}
+          className="w-full border px-3 py-2 rounded text-black"
+        >
+          <option value={0}>At the time of the event</option>
+          <option value={15}>15 minutes before</option>
+          <option value={60}>1 hour before</option>
+          <option value={360}>6 hours before</option>
+          <option value={1440}>1 day before</option>
+        </select>
 
-          <div className="flex justify-end gap-4">
-            <button
-              type="submit"
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-black text-white border border-white px-4 py-2 rounded"
-            >
-              Close
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          disabled={updateReminder.isPending}
+        >
+          {updateReminder.isPending ? "Saving..." : "Save Application"}
+        </button>
+      </form>
+    </Modal>
   );
 };
 
