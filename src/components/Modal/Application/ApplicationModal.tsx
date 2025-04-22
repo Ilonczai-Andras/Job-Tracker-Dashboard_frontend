@@ -43,6 +43,15 @@ const ApplicationModal = ({ isOpen, onClose }: ApplicationModalProps) => {
       onSuccess: (newApp) => {
         toast.success("Application successfully saved!");
 
+        setFormData({
+          title: "",
+          description: "",
+          company: "",
+          status: "todo",
+          link: "",
+          deadline: "",
+        });
+
         if (newApp.deadline) {
           const remindLocal = new Date(newApp.deadline);
           const remindUTC = new Date(
