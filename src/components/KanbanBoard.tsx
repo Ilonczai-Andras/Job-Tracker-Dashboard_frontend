@@ -190,7 +190,7 @@ export const KanbanBoard = () => {
       onDragEnd={handleDragEnd}
       onDragCancel={() => setActiveCard(null)}
     >
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4 h-[calc(100vh-70px)] bg-blue-100">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4 h-[calc(100vh-73px)] bg-blue-100">
         <Column id="todo" title="To Do" cards={board.todo} />
         <Column id="inprogress" title="In Progress" cards={board.inprogress} />
         <Column id="interview" title="Interview" cards={board.interview} />
