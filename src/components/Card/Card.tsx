@@ -12,7 +12,10 @@ export const Card = ({
     <div className="bg-white p-4 rounded shadow">
       <h4 className="font-semibold">{title}</h4>
       <p className="text-sm text-gray-600">{company}</p>
-      <p className="text-xs">{description}</p>
+      <div
+        className="text-xs"
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
       <p className="text-xs text-blue-500 truncate">{link}</p>
       <p className="text-xs text-right">
         {new Date(deadline).toLocaleDateString()}
