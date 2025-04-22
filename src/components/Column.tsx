@@ -18,9 +18,9 @@ export const Column = ({ id, title, cards }: ColumnProps) => {
   return (
     <div
       ref={setNodeRef}
-      className="bg-[#fefefe] rounded-2xl p-4 shadow-md flex flex-col gap-3 min-h-[80vh]"
+      className="bg-[#fefefe] rounded-2xl p-4 shadow-md flex flex-col gap-3 h-full max-h-[calc(100vh-6rem)] overflow-y-auto"
     >
-      <h3 className="text-[1.2rem] font-semibold mb-2 text-gray-700">
+      <h3 className="text-[1.2rem] font-semibold mb-2 text-gray-700 sticky top-0 bg-[#fefefe] z-10 pb-2">
         {title}
       </h3>
 
