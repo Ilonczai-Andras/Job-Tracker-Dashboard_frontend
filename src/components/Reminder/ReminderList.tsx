@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useReminders } from "../../hooks/Reminder/useGetReminders";
 import useDeleteReminder from "../../hooks/Reminder/useDeleteReminder";
 import ReminderModal from "../Modal/Reminder/ReminderModal";
 import { Spinner } from "../Spinner";
 import { Reminder } from "../../hooks/Reminder/types";
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   search?: string;
@@ -16,7 +17,14 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
   const [selectedReminder, setSelectedReminder] = useState<Reminder | null>(
     null
   );
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const deleteReminder = useDeleteReminder();
+
+  useEffect(() => {
+    const handleClickOutside = () => setOpenMenuId(null);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   if (isLoading) return <Spinner />;
   if (error)
@@ -26,7 +34,6 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
       </div>
     );
 
-  // 🔍 Szűrés: keresés + upcoming
   const filtered = reminders.filter((reminder) => {
     const matchesSearch =
       reminder.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -68,8 +75,57 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
       {filtered.map((reminder) => (
         <div
           key={reminder.id}
-          className="border rounded p-4 mb-2 flex justify-between items-start bg-gray-900"
+          className="relative border rounded p-4 mb-2 bg-gray-900"
         >
+          <span
+            className="absolute top-2 right-2"
+            title={reminder.is_sent ? "Sent" : "Unsent"}
+          >
+            {reminder.is_sent ? (
+              <CheckIcon className="w-6 h-6 text-green-400" />
+            ) : (
+              <XMarkIcon className="w-7 h-7 text-red-500" />
+            )}
+          </span>
+
+          <div className="absolute top-2 right-10">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenMenuId(openMenuId === reminder.id ? null : reminder.id);
+              }}
+              className="text-white text-xl font-bold hover:text-gray-300"
+            >
+              ⋮
+            </button>
+
+            {openMenuId === reminder.id && (
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="absolute right-0 mt-1 w-28 bg-white text-black rounded shadow z-10"
+              >
+                <button
+                  onClick={() => {
+                    deleteReminder.mutate(reminder.id);
+                    setOpenMenuId(null);
+                  }}
+                  className="block w-full px-4 py-2 text-left hover:bg-red-100"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => {
+                    openModal(reminder);
+                    setOpenMenuId(null);
+                  }}
+                  className="block w-full px-4 py-2 text-left hover:bg-green-100"
+                >
+                  Update
+                </button>
+              </div>
+            )}
+          </div>
+
           <div>
             <h3 className="text-lg font-semibold text-white">
               {reminder.title}
@@ -78,21 +134,6 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
             <p className="text-sm text-white">
               Reminder date: {new Date(reminder.remind_at).toLocaleString()}
             </p>
-          </div>
-          <div className="flex flex-col items-end ml-4">
-            <button
-              onClick={() => deleteReminder.mutate(reminder.id)}
-              className="m-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-            >
-              Delete
-            </button>
-
-            <button
-              onClick={() => openModal(reminder)}
-              className="m-1 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-            >
-              Update
-            </button>
           </div>
         </div>
       ))}
