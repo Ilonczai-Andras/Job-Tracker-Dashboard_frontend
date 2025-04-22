@@ -18,7 +18,9 @@ export const Card = ({
         className="text-xs"
         dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
       />
-      <p className="text-xs text-blue-500 truncate">{link}</p>
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        <p className="text-xs text-blue-500 truncate">{link}</p>
+      </a>
       <p className="text-xs text-right">
         {new Date(deadline).toLocaleDateString()}
       </p>
