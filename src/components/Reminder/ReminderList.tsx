@@ -7,13 +7,15 @@ import { Reminder } from "../../hooks/Reminder/types";
 
 interface Props {
   search?: string;
-  filter?: "all" | "upcoming";
+  filter?: "all" | "upcoming" | "sent" | "unsent";
 }
 
 const ReminderList = ({ search = "", filter = "all" }: Props) => {
   const { data: reminders = [], isLoading, error } = useReminders();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedReminder, setSelectedReminder] = useState<Reminder | null>(null);
+  const [selectedReminder, setSelectedReminder] = useState<Reminder | null>(
+    null
+  );
   const deleteReminder = useDeleteReminder();
 
   if (isLoading) return <Spinner />;
@@ -33,13 +35,21 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
     const now = new Date();
     const remindAt = new Date(reminder.remind_at);
     const isUpcoming =
-      remindAt >= now && remindAt <= new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+      remindAt >= now &&
+      remindAt <= new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+    const matchesStatus =
+      filter === "sent"
+        ? reminder.is_sent
+        : filter === "unsent"
+        ? !reminder.is_sent
+        : true;
 
     if (filter === "upcoming") {
-      return matchesSearch && isUpcoming;
+      return matchesSearch && isUpcoming && matchesStatus;
     }
 
-    return matchesSearch;
+    return matchesSearch && matchesStatus;
   });
 
   const openModal = (reminder: Reminder) => {
@@ -50,7 +60,9 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
   return (
     <div>
       {filtered.length === 0 && (
-        <p className="text-gray-400 text-sm mb-4">No matching reminders found.</p>
+        <p className="text-gray-400 text-sm mb-4">
+          No matching reminders found.
+        </p>
       )}
 
       {filtered.map((reminder) => (
