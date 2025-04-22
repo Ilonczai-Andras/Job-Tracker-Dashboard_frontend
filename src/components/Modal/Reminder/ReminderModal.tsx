@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Reminder } from "../../../hooks/Reminder/types";
 import { ReminderCreateInput } from "../../../hooks/Reminder/types";
 import Modal from "../Modal";
+import TextEditor from "../../TextEditor";
 
 type ReminderFormData = ReminderCreateInput & { id: number };
 
@@ -128,11 +129,9 @@ const ReminderModal = ({ isOpen, onClose, reminder }: ReminderModalProps) => {
         >
           Description
         </label>
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded text-black"
+        <TextEditor
+          value={formData.description|| ""}
+          onChange={(val) => setFormData({ ...formData, description: val })}
         />
         <label
           htmlFor="deadline"
