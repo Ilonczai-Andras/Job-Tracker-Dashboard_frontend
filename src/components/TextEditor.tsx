@@ -18,6 +18,11 @@ const MenuBar = () => {
         : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
     }`;
 
+  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const color = event.target.value;
+    editor.chain().focus().setColor(color).run();
+  };
+
   return (
     <div className="overflow-x-auto whitespace-nowrap flex gap-2 p-2 border-b border-gray-300 bg-gray-50 rounded-t-xl">
       <button
@@ -104,6 +109,12 @@ const MenuBar = () => {
       >
         Redo
       </button>
+      <input
+        type="color"
+        onChange={handleColorChange}
+        className="w-10 h-10 border border-gray-300 rounded-md cursor-pointer shrink-0"
+        title="Szín kiválasztása"
+      />
     </div>
   );
 };
