@@ -105,7 +105,10 @@ const ApplicationModal = ({ isOpen, onClose }: ApplicationModalProps) => {
         >
           Description
         </label>
-        <TextEditor />
+        <TextEditor
+          value={formData.description}
+          onChange={(val) => setFormData({ ...formData, description: val })}
+        />
 
         <label
           htmlFor="company"

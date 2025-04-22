@@ -4,7 +4,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import "../styles/tiptap.css"
+import "../styles/tiptap.css";
 
 const MenuBar = () => {
   const { editor } = useCurrentEditor();
@@ -126,23 +126,27 @@ const extensions = [
   }),
 ];
 
-const content = ``;
+interface TextEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
-const TextEditor = () => {
+const TextEditor = ({ value, onChange }: TextEditorProps) => {
   return (
-    <div className="rounded-xl border border-gray-300 shadow-sm bg-white">
-      <EditorProvider
-        slotBefore={<MenuBar />}
-        extensions={extensions}
-        content={content}
-        editorProps={{
-          attributes: {
-            class:
-              "prose max-w-full p-4 min-h-[300px] focus:outline-none text-gray-800",
-          },
-        }}
-      />
-    </div>
+    <EditorProvider
+      slotBefore={<MenuBar />}
+      extensions={extensions}
+      content={value}
+      onUpdate={({ editor }) => {
+        onChange(editor.getHTML());
+      }}
+      editorProps={{
+        attributes: {
+          class:
+            "tiptap prose max-w-full p-4 min-h-[300px] focus:outline-none text-gray-800 bg-white rounded",
+        },
+      }}
+    />
   );
 };
 
