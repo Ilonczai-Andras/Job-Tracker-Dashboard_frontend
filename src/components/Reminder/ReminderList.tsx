@@ -130,7 +130,10 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
             <h3 className="text-lg font-semibold text-white">
               {reminder.title}
             </h3>
-            <p className="text-white">{reminder.description}</p>
+            <div
+              className="text-white"
+              dangerouslySetInnerHTML={{ __html: reminder.description || "" }}
+            />
             <p className="text-sm text-white">
               Reminder date: {new Date(reminder.remind_at).toLocaleString()}
             </p>
