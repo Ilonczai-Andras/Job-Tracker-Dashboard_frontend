@@ -1,0 +1,33 @@
+/* styles/tiptap.css */
+.tiptap {
+    @apply prose max-w-full p-4 min-h-[300px] text-gray-800;
+  
+    ul, ol {
+      @apply pl-6 my-4;
+    }
+  
+    h1 {
+      @apply text-2xl mt-14 mb-6;
+    }
+  
+    h2 {
+      @apply text-xl mt-12 mb-4;
+    }
+  
+    code {
+      @apply bg-purple-100 rounded text-sm px-1 py-0.5;
+    }
+  
+    pre {
+      @apply bg-black text-white text-xs p-4 rounded font-mono my-6;
+    }
+  
+    blockquote {
+      @apply border-l-4 pl-4 my-6 border-gray-300 italic;
+    }
+  
+    hr {
+      @apply border-t border-gray-200 my-8;
+    }
+  }
+  

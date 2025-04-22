@@ -4,6 +4,7 @@ import useCreateApplication from "../../../hooks/Application/useCreateApplicatio
 import { ApplicationCreateInput } from "../../../hooks/Application/types";
 import useCreateReminder from "../../../hooks/Reminder/useCreateReminder";
 import { toast } from "react-hot-toast";
+import TextEditor from "../../TextEditor";
 
 interface ApplicationModalProps {
   isOpen: boolean;
@@ -104,14 +105,7 @@ const ApplicationModal = ({ isOpen, onClose }: ApplicationModalProps) => {
         >
           Description
         </label>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded text-black"
-        />
+        <TextEditor />
 
         <label
           htmlFor="company"
