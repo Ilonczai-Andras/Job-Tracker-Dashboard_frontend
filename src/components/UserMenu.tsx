@@ -3,11 +3,13 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useRef, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useProfiles } from "../hooks/Profile/useGetProfile";
 
 const LOCAL_STORAGE_KEY = "view-mode";
 
 const UserMenu = () => {
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
+  const { data: user, isLoading, error } = useProfiles();
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
@@ -25,6 +27,9 @@ const UserMenu = () => {
     } else if (path.includes("board")) {
       localStorage.setItem(LOCAL_STORAGE_KEY, "board");
       setViewMode("board");
+    } else if (path.includes("profile")) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, "profile");
+      setViewMode("profile");
     }
   }, [location]);
 
@@ -74,7 +79,7 @@ const UserMenu = () => {
           <div className="flex flex-col p-2 space-y-2">
             {isAuthenticated && (
               <>
-                {viewMode === "board" && (
+                {location.pathname !== "/reminders" && (
                   <Link
                     to="/reminders"
                     className="text-left hover:bg-gray-100 p-2 rounded transition-colors text-black"
@@ -83,7 +88,8 @@ const UserMenu = () => {
                     Reminders
                   </Link>
                 )}
-                {viewMode === "reminders" && (
+
+                {location.pathname !== "/board" && (
                   <Link
                     to="/board"
                     className="text-left hover:bg-gray-100 p-2 rounded transition-colors text-black"
@@ -92,13 +98,16 @@ const UserMenu = () => {
                     Kanban board
                   </Link>
                 )}
-                <Link
-                  to="/profile"
-                  className="text-left hover:bg-gray-100 p-2 rounded transition-colors text-black"
-                  onClick={() => setOpen(false)}
-                >
-                  Profile
-                </Link>
+
+                {location.pathname !== "/profile" && (
+                  <Link
+                    to="/profile"
+                    className="text-left hover:bg-gray-100 p-2 rounded transition-colors text-black"
+                    onClick={() => setOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                )}
               </>
             )}
 
