@@ -11,7 +11,7 @@ const useUpdateProfile = () => {
       const token = await getAccessTokenSilently();
       const baseUrl = process.env.REACT_APP_API_URL;
 
-      const res = await fetch(`${baseUrl}/api/profiles/${id}`, {
+      const res = await fetch(`${baseUrl}/api/profiles`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

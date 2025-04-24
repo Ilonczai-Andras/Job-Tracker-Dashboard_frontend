@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "@tanstack/react-query";
 import { ProfileCreateInput } from "./types";
 
-const useCreateOrUpdateProfile = () => {
+const useCreateProfile = () => {
   const { getAccessTokenSilently, user } = useAuth0();
 
   return useMutation({
@@ -34,4 +34,4 @@ const useCreateOrUpdateProfile = () => {
   });
 };
 
-export default useCreateOrUpdateProfile;
+export default useCreateProfile;

@@ -3,7 +3,7 @@ import { Header } from "./components/Header";
 import { KanbanBoard } from "./components/KanbanBoard";
 import ReminderView from "./components/Reminder/ReminderView";
 import { Spinner } from "./components/Spinner";
-import useCreateOrUpdateProfile from "./hooks/Profile/useCreateOrUpdateProfile";
+import useCreateProfile from "./hooks/Profile/useCreateOrUpdateProfile";
 import { Toaster } from "react-hot-toast";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import {ProfilePage} from "./components/ProfilePage";
 
 function App() {
-  const mutation = useCreateOrUpdateProfile();
+  const mutation = useCreateProfile();
   const { isLoading: isAuthLoading, isAuthenticated } = useAuth0();
 
   useEffect(() => {

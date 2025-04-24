@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useProfiles } from "../hooks/Profile/useGetProfile";
 import { Spinner } from "./Spinner";
+import useUpdateProfile from "../hooks/Profile/useUpdateProfile";
+import toast from "react-hot-toast";
 
 export const ProfilePage = () => {
   const { data: profile, isLoading, error } = useProfiles();
+  const updateProfile = useUpdateProfile();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,6 +19,39 @@ export const ProfilePage = () => {
       setPicture(profile.picture ?? "");
     }
   }, [profile]);
+
+  const handleSubmit = () => {
+    if (!profile) return;
+
+    const isUnchanged =
+      name === profile?.name &&
+      email === profile?.email &&
+      picture === profile?.picture;
+
+    if (isUnchanged) {
+      toast.success("Nothing changed to update.");
+      return;
+    }
+
+    updateProfile.mutate(
+      {
+        id: profile.id,
+        data: {
+          name,
+          email,
+          picture,
+        },
+      },
+      {
+        onSuccess: () => {
+          toast.success("Reminder successfully updated!");
+        },
+        onError: () => {
+          toast.error("Failed to update reminder");
+        },
+      }
+    );
+  };
 
   if (isLoading) return <Spinner />;
   if (error)
@@ -82,10 +118,13 @@ export const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Action buttons */}
           <div className="flex flex-wrap justify-end gap-4 pt-6">
-            <button className="border-2 border-black px-6 py-3 rounded shadow-md">
-              Save
+            <button
+              className="border-2 border-black px-6 py-3 rounded shadow-md"
+              onClick={handleSubmit}
+              disabled={updateProfile.isPending}
+            >
+              {updateProfile.isPending ? "Saving..." : "Save"}
             </button>
             <button
               className="border-2 border-black px-6 py-3 rounded shadow-md"
