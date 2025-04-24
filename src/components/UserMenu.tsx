@@ -92,6 +92,13 @@ const UserMenu = () => {
                     Kanban board
                   </Link>
                 )}
+                <Link
+                  to="/profile"
+                  className="text-left hover:bg-gray-100 p-2 rounded transition-colors text-black"
+                  onClick={() => setOpen(false)}
+                >
+                  Profile
+                </Link>
               </>
             )}
 

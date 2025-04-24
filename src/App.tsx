@@ -10,6 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicHome from "./components/PublicHome";
 import { useEffect } from "react";
+import {ProfilePage} from "./components/ProfilePage";
 
 function App() {
   const mutation = useCreateOrUpdateProfile();
@@ -54,6 +55,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ReminderView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />
