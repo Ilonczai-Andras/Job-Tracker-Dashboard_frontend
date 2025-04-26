@@ -7,11 +7,15 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useAnalytics } from "../../hooks/Analytics/useApplicationsPerStatus";
 
-export const StatusBarChart = () => {
-  const { data: analytics, isLoading, error } = useAnalytics();
+interface StatusBarChartProps {
+  analytics: {
+    status: string;
+    count: number;
+  }[];
+}
 
+export const StatusBarChart = ({ analytics }: StatusBarChartProps) => {
   return (
     <div className="bg-white shadow-md rounded-2xl p-6">
       <h2 className="text-2xl font-semibold mb-4">

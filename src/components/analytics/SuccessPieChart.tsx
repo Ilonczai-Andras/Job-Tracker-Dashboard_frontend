@@ -1,29 +1,35 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-const dummyData = [
-  { name: "Success", value: 10 },
-  { name: "Others", value: 90 },
-];
+interface SuccessPieChartProps {
+  successRate: number;
+}
 
 const COLORS = ["#00C49F", "#FF8042"];
 
-export const SuccessPieChart = () => {
+export const SuccessPieChart = ({ successRate }: SuccessPieChartProps) => {
+  const chartData = [
+    { name: "Success", value: successRate },
+    { name: "Other", value: 100 - successRate },
+  ];
+
   return (
     <div className="bg-white shadow-md rounded-2xl p-6">
-      <h2 className="text-2xl font-semibold mb-4">Success rate</h2>
+      <h2 className="text-2xl font-semibold mb-4">Success Rate</h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
-            data={dummyData}
+            data={chartData}
             dataKey="value"
             nameKey="name"
             cx="50%"
             cy="50%"
             outerRadius={80}
-            label
+            label={({ name, percent }) =>
+              `${name}: ${(percent * 100).toFixed(0)}%`
+            }
           >
-            {dummyData.map((entry, index) => (
+            {chartData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}
