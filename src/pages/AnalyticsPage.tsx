@@ -8,6 +8,15 @@ import { Spinner } from "../components/Spinner";
 
 const AnalyticsPage = () => {
   const { data: analytics, isLoading, error } = useAnalytics();
+  const totalDays =
+    analytics?.averageTimePerStatus?.reduce(
+      (sum: number, item: { average_days: string }) =>
+        sum + parseFloat(item.average_days),
+      0
+    ) || 0;
+  const avgDays = analytics?.averageTimePerStatus?.length
+    ? (totalDays / analytics.averageTimePerStatus.length).toFixed(2)
+    : "0";
 
   if (isLoading) return <Spinner />;
 
@@ -22,7 +31,7 @@ const AnalyticsPage = () => {
           title="Success rate"
           value={`${analytics?.successRate?.toFixed(1) || 0}%`}
         />
-        <StatCard title="Average time in status" value="3.5 nap" />
+        <StatCard title="Average time in status" value={`${avgDays} days`} />
       </div>
 
       <div className="space-y-8">
