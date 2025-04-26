@@ -31,6 +31,10 @@ const UserMenu = () => {
       localStorage.setItem(LOCAL_STORAGE_KEY, "profile");
       setViewMode("profile");
     }
+    else if (path.includes("analytics")) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, "analytics");
+      setViewMode("analytics");
+    }
   }, [location]);
 
   useEffect(() => {
@@ -106,6 +110,15 @@ const UserMenu = () => {
                     onClick={() => setOpen(false)}
                   >
                     Profile
+                  </Link>
+                )}
+                {location.pathname !== "/analytics" && (
+                  <Link
+                    to="/analytics"
+                    className="text-left hover:bg-gray-100 p-2 rounded transition-colors text-black"
+                    onClick={() => setOpen(false)}
+                  >
+                    Analytics
                   </Link>
                 )}
               </>

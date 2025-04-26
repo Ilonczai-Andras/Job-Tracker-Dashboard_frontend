@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PublicHome from "./pages/PublicHomePage";
 import { useEffect } from "react";
 import { ProfilePage } from "./pages/ProfilePage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 function App() {
   const mutation = useCreateProfile();
@@ -63,6 +64,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <AnalyticsPage />
               </ProtectedRoute>
             }
           />
