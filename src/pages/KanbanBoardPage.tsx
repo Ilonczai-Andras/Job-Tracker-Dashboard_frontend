@@ -2,12 +2,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { DndContext, DragEndEvent, DragOverlay } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useState, useEffect } from "react";
-import { Column } from "./Column";
-import { Card } from "./Card/Card";
+import { Column } from "../components/Column";
+import { Card } from "../components/Card/Card";
 import { useApplications } from "../hooks/Application/useGetApplications";
 import { Application } from "../hooks/Application/types";
 import useUpdateApplication from "../hooks/Application/useUpdateApplication";
-import { Spinner } from "./Spinner";
+import { Spinner } from "../components/Spinner";
 import { toast } from "react-hot-toast";
 
 type ColumnId = "todo" | "inprogress" | "interview" | "done";

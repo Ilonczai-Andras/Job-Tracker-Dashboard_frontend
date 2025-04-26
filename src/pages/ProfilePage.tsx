@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useProfiles } from "../hooks/Profile/useGetProfile";
-import { Spinner } from "./Spinner";
+import { Spinner } from "../components/Spinner";
 import useUpdateProfile from "../hooks/Profile/useUpdateProfile";
 import toast from "react-hot-toast";
 
