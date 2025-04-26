@@ -10,7 +10,7 @@ import useUpdateApplication from "../hooks/Application/useUpdateApplication";
 import { Spinner } from "../components/Spinner";
 import { toast } from "react-hot-toast";
 
-type ColumnId = "todo" | "inprogress" | "interview" | "done";
+type ColumnId = "todo" | "inprogress" | "interview" | "offer" | "rejected";
 
 type BoardState = {
   [key in ColumnId]: Application[];
@@ -20,7 +20,8 @@ const emptyBoard: BoardState = {
   todo: [],
   inprogress: [],
   interview: [],
-  done: [],
+  offer: [],
+  rejected: [],
 };
 
 export const KanbanBoard = () => {
@@ -38,7 +39,8 @@ export const KanbanBoard = () => {
       todo: [],
       inprogress: [],
       interview: [],
-      done: [],
+      offer: [],
+      rejected: [],
     };
 
     applications.forEach((app) => {
@@ -194,7 +196,8 @@ export const KanbanBoard = () => {
         <Column id="todo" title="To Do" cards={board.todo} />
         <Column id="inprogress" title="In Progress" cards={board.inprogress} />
         <Column id="interview" title="Interview" cards={board.interview} />
-        <Column id="done" title="Done" cards={board.done} />
+        <Column id="offer" title="Offer" cards={board.offer} />
+        <Column id="rejected" title="Rejected" cards={board.rejected} />
       </div>
 
       <DragOverlay>{activeCard && <Card {...activeCard} />}</DragOverlay>

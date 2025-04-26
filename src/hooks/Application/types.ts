@@ -4,7 +4,7 @@ export interface Application {
     title: string;
     description: string;
     company: string;
-    status: "todo" | "inprogress" | "interview" | "done";
+    status: "todo" | "inprogress" | "interview" | "offer" | "rejected";
     link: string;
     deadline: string;
   }
