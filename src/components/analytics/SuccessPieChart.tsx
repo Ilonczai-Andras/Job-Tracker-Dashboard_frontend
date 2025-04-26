@@ -24,10 +24,20 @@ export const SuccessPieChart = () => {
             label
           >
             {dummyData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip
+            contentStyle={{
+              fontSize: "18px",
+              fontWeight: "500",
+              borderRadius: "8px",
+              padding: "10px",
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>

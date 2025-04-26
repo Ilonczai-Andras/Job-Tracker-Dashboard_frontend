@@ -1,5 +1,12 @@
 import React from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 const dummyData = [
   { status: "Applied", avgDays: 3 },
@@ -14,9 +21,18 @@ export const AverageTimeBarChart = () => {
       <h2 className="text-2xl font-semibold mb-4">Average time by status</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={dummyData}>
-          <XAxis dataKey="status" />
-          <YAxis label={{ value: "Napok", angle: -90, position: "insideLeft" }} />
-          <Tooltip />
+          <XAxis dataKey="status" tick={{ fontSize: 20, fontWeight: 500 }} />
+          <YAxis
+            label={{ value: "Napok", angle: -90, position: "insideLeft" }}
+          />
+          <Tooltip
+            contentStyle={{
+              fontSize: "18px",
+              fontWeight: "500",
+              borderRadius: "8px",
+              padding: "10px",
+            }}
+          />
           <Bar dataKey="avgDays" />
         </BarChart>
       </ResponsiveContainer>
