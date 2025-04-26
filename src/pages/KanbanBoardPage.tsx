@@ -9,6 +9,7 @@ import { Application } from "../hooks/Application/types";
 import useUpdateApplication from "../hooks/Application/useUpdateApplication";
 import { Spinner } from "../components/Spinner";
 import { toast } from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 type ColumnId = "todo" | "inprogress" | "interview" | "offer" | "rejected";
 
@@ -31,6 +32,8 @@ export const KanbanBoard = () => {
 
   const [board, setBoard] = useState<BoardState>(emptyBoard);
   const [activeCard, setActiveCard] = useState<Application | null>(null);
+
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (!applications || applications.length === 0) return;
@@ -179,6 +182,7 @@ export const KanbanBoard = () => {
         id,
         data: rest,
       });
+      queryClient.invalidateQueries({ queryKey: ['analytics'] });
       toast.success("Application succesfully updated!");
     } catch (error) {
       console.error("Failed to update application", error);
