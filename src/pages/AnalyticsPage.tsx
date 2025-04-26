@@ -28,7 +28,9 @@ const AnalyticsPage = () => {
       <div className="space-y-8">
         <StatusBarChart analytics={analytics?.applicationsPerStatus || []} />
         <SuccessPieChart successRate={analytics?.successRate || 0} />
-        <AverageTimeBarChart />
+        <AverageTimeBarChart
+          averageTimePerStatus={analytics?.averageTimePerStatus || []}
+        />
       </div>
     </div>
   );

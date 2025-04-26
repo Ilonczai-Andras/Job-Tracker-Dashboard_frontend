@@ -23,7 +23,13 @@ export const StatusBarChart = ({ analytics }: StatusBarChartProps) => {
       </h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={analytics}>
-          <XAxis dataKey="status" tick={{ fontSize: 20, fontWeight: 500 }} />
+          <XAxis
+            dataKey="status"
+            tick={{ fontSize: 20, fontWeight: 500 }}
+            tickFormatter={(value: string) =>
+              value.charAt(0).toUpperCase() + value.slice(1)
+            }
+          />
           <YAxis allowDecimals={false} />
           <Tooltip
             contentStyle={{
