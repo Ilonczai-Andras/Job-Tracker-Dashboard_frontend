@@ -11,7 +11,7 @@ const COLORS = ["#00C49F", "#FF8042"];
 export const SuccessPieChart = () => {
   return (
     <div className="bg-white shadow-md rounded-2xl p-6">
-      <h2 className="text-xl font-semibold mb-4">Success rate</h2>
+      <h2 className="text-2xl font-semibold mb-4">Success rate</h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie

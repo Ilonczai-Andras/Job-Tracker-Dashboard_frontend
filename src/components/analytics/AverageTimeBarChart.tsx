@@ -11,7 +11,7 @@ const dummyData = [
 export const AverageTimeBarChart = () => {
   return (
     <div className="bg-white shadow-md rounded-2xl p-6">
-      <h2 className="text-xl font-semibold mb-4">Average time by status</h2>
+      <h2 className="text-2xl font-semibold mb-4">Average time by status</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={dummyData}>
           <XAxis dataKey="status" />
