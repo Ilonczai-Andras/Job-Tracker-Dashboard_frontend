@@ -7,22 +7,18 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-const dummyData = [
-  { status: "Applied", count: 50 },
-  { status: "Interview", count: 20 },
-  { status: "Offer", count: 5 },
-  { status: "Rejected", count: 25 },
-];
+import { useAnalytics } from "../../hooks/Analytics/useApplicationsPerStatus";
 
 export const StatusBarChart = () => {
+  const { data: analytics, isLoading, error } = useAnalytics();
+
   return (
     <div className="bg-white shadow-md rounded-2xl p-6">
       <h2 className="text-2xl font-semibold mb-4">
         Number of applications by status
       </h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dummyData}>
+        <BarChart data={analytics}>
           <XAxis dataKey="status" tick={{ fontSize: 20, fontWeight: 500 }} />
           <YAxis allowDecimals={false} />
           <Tooltip
