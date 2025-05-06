@@ -7,9 +7,9 @@ import { Card } from "../components/Card/Card";
 import { useApplications } from "../hooks/Application/useGetApplications";
 import { Application } from "../hooks/Application/types";
 import useUpdateApplication from "../hooks/Application/useUpdateApplication";
-import { Spinner } from "../components/Spinner";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { Skeleton } from "../components/Skeleton"; // Import Skeleton
 
 type ColumnId = "todo" | "inprogress" | "interview" | "offer" | "rejected";
 
@@ -25,9 +25,29 @@ const emptyBoard: BoardState = {
   rejected: [],
 };
 
+const KanbanBoardSkeleton = () => (
+  <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4 pt-24 h-[calc(100vh-73px)] bg-blue-100 animate-pulse">
+    {/* Render skeleton columns */}
+    {Object.keys(emptyBoard).map((key) => (
+      <div key={key} className="bg-white rounded-md shadow-sm p-4">
+        <Skeleton width="80%" height={24} className="mb-4" />
+        {/* Render skeleton cards within each column */}
+        {[...Array(3)].map((_, index) => (
+          <div
+            key={index}
+            className="bg-gray-200 rounded-md shadow-sm p-2 mb-2"
+          >
+            <Skeleton height={80} />
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+);
+
 export const KanbanBoard = () => {
-  const { isAuthenticated } = useAuth0();
-  const { data: applications = [], isLoading, error } = useApplications();
+  const { isAuthenticated, isLoading } = useAuth0();
+  const { data: applications = [], error } = useApplications();
   const updateApplication = useUpdateApplication();
 
   const [board, setBoard] = useState<BoardState>(emptyBoard);
@@ -56,10 +76,10 @@ export const KanbanBoard = () => {
   }, [applications]);
 
   if (!isAuthenticated) return <p>Please log in to see your board.</p>;
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <KanbanBoardSkeleton />; // Show skeleton while loading
   if (error)
     return (
-      <div className="text-center text-red-600 py-4">
+      <div className="text-center text-red-600 py-4 pt-24">
         ⚠ An error occurred when loading data. Please try again later.
       </div>
     );
@@ -182,7 +202,7 @@ export const KanbanBoard = () => {
         id,
         data: rest,
       });
-      queryClient.invalidateQueries({ queryKey: ['analytics'] });
+      queryClient.invalidateQueries({ queryKey: ["analytics"] });
       toast.success("Application succesfully updated!");
     } catch (error) {
       console.error("Failed to update application", error);
@@ -196,7 +216,7 @@ export const KanbanBoard = () => {
       onDragEnd={handleDragEnd}
       onDragCancel={() => setActiveCard(null)}
     >
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4 h-[calc(100vh-73px)] bg-blue-100">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4 pt-24 h-[calc(100vh-73px)] bg-blue-100">
         <Column id="todo" title="To Do" cards={board.todo} />
         <Column id="inprogress" title="In Progress" cards={board.inprogress} />
         <Column id="interview" title="Interview" cards={board.interview} />
@@ -204,7 +224,13 @@ export const KanbanBoard = () => {
         <Column id="rejected" title="Rejected" cards={board.rejected} />
       </div>
 
-      <DragOverlay>{activeCard && <Card {...activeCard} />}</DragOverlay>
+      <DragOverlay>
+        {activeCard ? (
+          (activeCard as { id: number }).id !== undefined ? (
+            <Card {...(activeCard as Application)} />
+          ) : null
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 };

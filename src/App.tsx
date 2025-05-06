@@ -1,7 +1,7 @@
 import "./App.css";
 import { Header } from "./components/Header";
 import { KanbanBoard } from "./pages/KanbanBoardPage";
-import ReminderView from "./components/Reminder/ReminderView";
+import ReminderView from "./pages/ReminderPage";
 import { Spinner } from "./components/Spinner";
 import useCreateProfile from "./hooks/Profile/useCreateOrUpdateProfile";
 import { Toaster } from "react-hot-toast";

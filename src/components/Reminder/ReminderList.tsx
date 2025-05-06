@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useReminders } from "../../hooks/Reminder/useGetReminders";
 import useDeleteReminder from "../../hooks/Reminder/useDeleteReminder";
 import ReminderModal from "../Modal/Reminder/ReminderModal";
-import { Spinner } from "../Spinner";
 import { Reminder } from "../../hooks/Reminder/types";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Skeleton } from "../Skeleton"; // Import the Skeleton component
 
 interface Props {
   search?: string;
@@ -26,7 +26,34 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) {
+    return (
+      <div className="space-y-2">
+        {/* Skeleton for no reminders message */}
+        <Skeleton width={200} height={20} className="mb-4" />
+        {/* Skeleton for individual reminder items */}
+        {[...Array(3)].map((_, index) => (
+          <div
+            key={index}
+            className="relative border rounded p-4 mb-2 bg-gray-900 animate-pulse"
+          >
+            <div className="absolute top-2 right-2">
+              <Skeleton width={24} height={24} className="rounded-full" />
+            </div>
+            <div className="absolute top-2 right-10">
+              <Skeleton width={20} height={20} />
+            </div>
+            <div>
+              <Skeleton width="80%" height={24} className="mb-2" />
+              <Skeleton width="60%" height={16} className="mb-1" />
+              <Skeleton width="70%" height={16} />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   if (error)
     return (
       <div className="text-center text-red-600 py-4">

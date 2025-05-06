@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useProfiles } from "../hooks/Profile/useGetProfile";
-import { Spinner } from "../components/Spinner";
 import useUpdateProfile from "../hooks/Profile/useUpdateProfile";
 import toast from "react-hot-toast";
+import { Skeleton } from "../components/Skeleton"; // Import the Skeleton component
 
 export const ProfilePage = () => {
   const { data: profile, isLoading, error } = useProfiles();
@@ -44,20 +44,68 @@ export const ProfilePage = () => {
       },
       {
         onSuccess: () => {
-          toast.success("Reminder successfully updated!");
+          toast.success("Profile successfully updated!");
         },
         onError: () => {
-          toast.error("Failed to update reminder");
+          toast.error("Failed to update profile");
         },
       }
     );
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) {
+    return (
+      <div className="min-h-[calc(100vh-64px)] bg-[#f5f8ff] flex justify-center items-center py-8">
+        <div className="w-full max-w-6xl bg-white shadow-xl rounded-2xl p-8 flex flex-col lg:flex-row gap-8">
+          {/* Picture skeleton */}
+          <div className="flex-shrink-0 w-full lg:w-1/3 flex justify-center items-center">
+            <div className="w-64 h-72 bg-gray-200 rounded-xl border-2 border-black flex justify-center items-center animate-pulse">
+              <div className="w-48 h-48 rounded-full bg-gray-300 shadow" />
+            </div>
+          </div>
+
+          {/* Form skeleton */}
+          <div className="w-full lg:w-2/3 space-y-6">
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <div>
+                <Skeleton height={40} />
+              </div>
+            </div>
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <div>
+                <Skeleton height={40} />
+              </div>
+            </div>
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Picture link
+              </label>
+              <div>
+                <Skeleton height={40} />
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-end gap-4 pt-6">
+              <Skeleton width={100} height={40} />
+              <Skeleton width={100} height={40} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (error)
     return (
-      <div className="text-center text-red-600 py-4">
-        ⚠ An error occurred when loading data. Please try again later.
+      <div className="min-h-[calc(100vh-64px)] bg-[#f5f8ff] flex justify-center items-center py-8">
+        <div className="text-center text-red-600 py-4">
+          ⚠ An error occurred when loading data. Please try again later.
+        </div>
       </div>
     );
 
@@ -90,7 +138,9 @@ export const ProfilePage = () => {
                 className="w-full border-2 border-black p-3 rounded"
               />
             </div>
+          </div>
 
+          <div className="space-y-4">
             <label className="block text-sm font-medium text-gray-700">
               Email
             </label>
@@ -103,7 +153,9 @@ export const ProfilePage = () => {
                 className="w-full border-2 border-black p-3 rounded"
               />
             </div>
+          </div>
 
+          <div className="space-y-4">
             <label className="block text-sm font-medium text-gray-700">
               Picture link
             </label>

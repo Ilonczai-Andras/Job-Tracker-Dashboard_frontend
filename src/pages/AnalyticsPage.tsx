@@ -4,7 +4,7 @@ import { StatusBarChart } from "../components/analytics/StatusBarChart";
 import { SuccessPieChart } from "../components/analytics/SuccessPieChart";
 import { AverageTimeBarChart } from "../components/analytics/AverageTimeBarChart";
 import { useAnalytics } from "../hooks/Analytics/useApplicationsPerStatus";
-import { Spinner } from "../components/Spinner";
+import { Skeleton } from "../components/Skeleton"; // Import a Skeleton component
 
 const AnalyticsPage = () => {
   const { data: analytics, isLoading, error } = useAnalytics();
@@ -18,10 +18,28 @@ const AnalyticsPage = () => {
     ? (totalDays / analytics.averageTimePerStatus.length).toFixed(2)
     : "0";
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) {
+    return (
+      <div className="p-6 space-y-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Skeleton height={100} />
+          <Skeleton height={100} />
+          <Skeleton height={100} />
+        </div>
+        <div className="space-y-8">
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="p-6">Error loading analytics.</div>;
+  }
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-6 space-y-8 pt-24">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
           title="All applications"
@@ -33,7 +51,6 @@ const AnalyticsPage = () => {
         />
         <StatCard title="Average time in status" value={`${avgDays} days`} />
       </div>
-
       <div className="space-y-8">
         <StatusBarChart analytics={analytics?.applicationsPerStatus || []} />
         <SuccessPieChart successRate={analytics?.successRate || 0} />
