@@ -216,7 +216,7 @@ export const KanbanBoard = () => {
       onDragEnd={handleDragEnd}
       onDragCancel={() => setActiveCard(null)}
     >
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 sm:gap-6 p-3 sm:p-4 pt-24 h-[calc(100vh-73px)] bg-blue-100 overflow-x-auto">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 sm:gap-6 p-3 sm:p-4 pt-[88px] sm:pt-[96px] h-[calc(100vh-73px)] bg-blue-100 overflow-x-auto">
         <Column id="todo" title="To Do" cards={board.todo} />
         <Column id="inprogress" title="In Progress" cards={board.inprogress} />
         <Column id="interview" title="Interview" cards={board.interview} />
