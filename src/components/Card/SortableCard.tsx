@@ -3,7 +3,6 @@ import { CSS } from "@dnd-kit/utilities";
 import { Card } from "./Card";
 import { Application } from "../../hooks/Application/types";
 
-
 interface Props {
   card: Application;
 }

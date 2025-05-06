@@ -16,9 +16,13 @@ const ReminderView = () => {
       <div className="space-y-6 p-4 pt-16">
         {" "}
         {/* Added pt-16 for top padding */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
+          {" "}
+          {/* Increased gap for better mobile spacing */}
           <Skeleton width={200} height={24} />
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
+            {" "}
+            {/* Increased gap for better mobile spacing */}
             <Skeleton width={300} height={36} />
             <Skeleton width={150} height={36} />
           </div>
@@ -39,18 +43,22 @@ const ReminderView = () => {
     <div className="space-y-6 p-4 pt-24">
       {" "}
       {/* Added pt-16 for top padding */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <h2 className="text-xl font-semibold">Managing reminders</h2>
-
-        <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2">
+        {" "}
+        {/* Increased gap for better mobile spacing */}
+        <h2 className="text-xl font-semibold mb-2 sm:mb-0">
+          Managing reminders
+        </h2>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 w-full sm:w-auto">
+          {" "}
+          {/* Added w-full for mobile width */}
           <input
             type="text"
             placeholder="Search title or description..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border px-3 py-1 rounded text-black"
+            className="border px-3 py-1 rounded text-black w-full sm:w-auto"
           />
-
           <select
             value={filter}
             onChange={(e) =>
@@ -58,7 +66,7 @@ const ReminderView = () => {
                 e.target.value as "all" | "upcoming" | "sent" | "unsent"
               )
             }
-            className="border px-3 py-1 rounded text-black"
+            className="border px-3 py-1 rounded text-black w-full sm:w-auto"
           >
             <option value="all">All reminders</option>
             <option value="upcoming">Next 7 days</option>

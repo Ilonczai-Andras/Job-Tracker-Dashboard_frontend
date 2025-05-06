@@ -26,16 +26,16 @@ const emptyBoard: BoardState = {
 };
 
 const KanbanBoardSkeleton = () => (
-  <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4 pt-24 h-[calc(100vh-73px)] bg-blue-100 animate-pulse">
+  <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 sm:gap-6 p-4 pt-24 h-[calc(100vh-73px)] bg-blue-100 animate-pulse">
     {/* Render skeleton columns */}
     {Object.keys(emptyBoard).map((key) => (
-      <div key={key} className="bg-white rounded-md shadow-sm p-4">
-        <Skeleton width="80%" height={24} className="mb-4" />
+      <div key={key} className="bg-white rounded-md shadow-sm p-3 sm:p-4">
+        <Skeleton width="80%" height={24} className="mb-3 sm:mb-4" />
         {/* Render skeleton cards within each column */}
         {[...Array(3)].map((_, index) => (
           <div
             key={index}
-            className="bg-gray-200 rounded-md shadow-sm p-2 mb-2"
+            className="bg-gray-200 rounded-md shadow-sm p-2 mb-1 sm:mb-2"
           >
             <Skeleton height={80} />
           </div>
@@ -76,7 +76,7 @@ export const KanbanBoard = () => {
   }, [applications]);
 
   if (!isAuthenticated) return <p>Please log in to see your board.</p>;
-  if (isLoading) return <KanbanBoardSkeleton />; // Show skeleton while loading
+  if (isLoading) return <KanbanBoardSkeleton />;
   if (error)
     return (
       <div className="text-center text-red-600 py-4 pt-24">
@@ -216,7 +216,7 @@ export const KanbanBoard = () => {
       onDragEnd={handleDragEnd}
       onDragCancel={() => setActiveCard(null)}
     >
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4 pt-24 h-[calc(100vh-73px)] bg-blue-100">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 sm:gap-6 p-3 sm:p-4 pt-24 h-[calc(100vh-73px)] bg-blue-100 overflow-x-auto">
         <Column id="todo" title="To Do" cards={board.todo} />
         <Column id="inprogress" title="In Progress" cards={board.inprogress} />
         <Column id="interview" title="Interview" cards={board.interview} />

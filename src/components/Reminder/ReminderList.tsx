@@ -35,7 +35,7 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
         {[...Array(3)].map((_, index) => (
           <div
             key={index}
-            className="relative border rounded p-4 mb-2 bg-gray-900 animate-pulse"
+            className="relative border rounded p-3 sm:p-4 mb-2 bg-gray-900 animate-pulse flex items-center gap-3"
           >
             <div className="absolute top-2 right-2">
               <Skeleton width={24} height={24} className="rounded-full" />
@@ -43,9 +43,11 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
             <div className="absolute top-2 right-10">
               <Skeleton width={20} height={20} />
             </div>
-            <div>
-              <Skeleton width="80%" height={24} className="mb-2" />
-              <Skeleton width="60%" height={16} className="mb-1" />
+            <div className="flex-1">
+              {" "}
+              {/* Take up remaining space */}
+              <Skeleton width="80%" height={24} className="mb-1 sm:mb-2" />
+              <Skeleton width="60%" height={16} className="mb-0.5 sm:mb-1" />
               <Skeleton width="70%" height={16} />
             </div>
           </div>
@@ -102,34 +104,35 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
       {filtered.map((reminder) => (
         <div
           key={reminder.id}
-          className="relative border rounded p-4 mb-2 bg-gray-900"
+          className="relative border rounded p-3 sm:p-4 mb-2 bg-gray-900 flex items-center gap-3"
         >
           <span
             className="absolute top-2 right-2"
             title={reminder.is_sent ? "Sent" : "Unsent"}
           >
             {reminder.is_sent ? (
-              <CheckIcon className="w-6 h-6 text-green-400" />
+              <CheckIcon className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
             ) : (
-              <XMarkIcon className="w-7 h-7 text-red-500" />
+              <XMarkIcon className="w-5 h-5 sm:w-7 sm:h-7 text-red-500" />
             )}
           </span>
 
-          <div className="absolute top-2 right-10">
+          <div className="absolute top-2 right-8 sm:right-10">
+            {" "}
+            {/* Adjust position for smaller screens */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setOpenMenuId(openMenuId === reminder.id ? null : reminder.id);
               }}
-              className="text-white text-xl font-bold hover:text-gray-300"
+              className="text-white text-lg sm:text-xl font-bold hover:text-gray-300"
             >
               ⋮
             </button>
-
             {openMenuId === reminder.id && (
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="absolute right-0 mt-1 w-28 bg-white text-black rounded shadow z-10"
+                className="absolute right-0 mt-1 w-28 bg-white text-black rounded shadow z-10 text-sm sm:text-base"
               >
                 <button
                   onClick={() => {
@@ -153,15 +156,22 @@ const ReminderList = ({ search = "", filter = "all" }: Props) => {
             )}
           </div>
 
-          <div>
-            <h3 className="text-lg font-semibold text-white">
+          <div className="flex-1 min-w-0">
+            {" "}
+            {/* Added flex-1 and min-w-0 for text overflow handling */}
+            <h3 className="text-lg font-semibold text-white truncate">
+              {" "}
+              {/* Added truncate for long titles */}
               {reminder.title}
             </h3>
             <div
-              className="text-white"
+              className="text-white text-sm overflow-hidden"
+              style={{ maxHeight: "60px" }}
               dangerouslySetInnerHTML={{ __html: reminder.description || "" }}
             />
-            <p className="text-sm text-white">
+            <p className="text-xs text-white mt-1 sm:text-sm">
+              {" "}
+              {/* Smaller font on mobile */}
               Reminder date: {new Date(reminder.remind_at).toLocaleString()}
             </p>
           </div>
