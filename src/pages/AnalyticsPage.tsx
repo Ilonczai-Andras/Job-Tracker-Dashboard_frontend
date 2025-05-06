@@ -20,15 +20,19 @@ const AnalyticsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-8">
+      <div className="p-6 space-y-8 pt-16 sm:pt-24">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Skeleton height={100} />
           <Skeleton height={100} />
           <Skeleton height={100} />
         </div>
-        <div className="space-y-8">
+        <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+          {" "}
+          {/* Tablet és nagyobb elrendezés */}
           <Skeleton height={300} />
           <Skeleton height={300} />
+          <Skeleton height={300} />{" "}
+          {/* Ha 3 grafikon van, ez a sor kicsit másképp kezelendő */}
         </div>
       </div>
     );
@@ -39,7 +43,7 @@ const AnalyticsPage = () => {
   }
 
   return (
-    <div className="p-6 space-y-8 pt-24">
+    <div className="p-6 space-y-8 pt-16 sm:pt-24">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
           title="All applications"
@@ -51,12 +55,22 @@ const AnalyticsPage = () => {
         />
         <StatCard title="Average time in status" value={`${avgDays} days`} />
       </div>
-      <div className="space-y-8">
-        <StatusBarChart analytics={analytics?.applicationsPerStatus || []} />
-        <SuccessPieChart successRate={analytics?.successRate || 0} />
-        <AverageTimeBarChart
-          averageTimePerStatus={analytics?.averageTimePerStatus || []}
-        />
+      <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+        {" "}
+        {/* Tablet és nagyobb elrendezés */}
+        <div className="max-w-xl mx-auto md:max-w-full">
+          <StatusBarChart analytics={analytics?.applicationsPerStatus || []} />
+        </div>
+        <div className="max-w-xl mx-auto md:max-w-full">
+          <SuccessPieChart successRate={analytics?.successRate || 0} />
+        </div>
+        <div className="max-w-xl mx-auto md:max-w-full lg:col-span-2">
+          {" "}
+          {/* Hogy elférjen egymás alatt a két oszlopban */}
+          <AverageTimeBarChart
+            averageTimePerStatus={analytics?.averageTimePerStatus || []}
+          />
+        </div>
       </div>
     </div>
   );
